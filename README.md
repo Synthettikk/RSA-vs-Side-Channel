@@ -47,9 +47,8 @@ puis on démasque juste après, avant d'envoyer le résultat.
 - masquer : $m' \equiv (m r^e) \mod n$
 - calcul privé : $s' = (m')^d \mod n = m^d r \mod n$
 - démasquer : $s = s' r^{-1} \mod n = m^d \mod n$
-Surcoût : demande de calculer $r^e \mod n$ (même coût qu'un chiffrement : $O(n^2)$) et $r^{-1} \mod n$
-(coûte << qu'une exp modulaire : $O(n^3)$ grâce à des optimisations de gmp).
-Notons qu'on utilise un masquage multiplicatif du message
+  
+Notons que l'on utilise un masquage multiplicatif du message
 (et non additif : $m' = m + rn$ car cela disparait dès le premier mod $n$)
 
 #### Masquage d'exposant
@@ -93,7 +92,7 @@ Avec la montgomery ladder, c'est similaire sauf que pour chaque bit d'exposant o
 Mais notre algorithme de Montgomery ladder fait aussi une vérification pour prévenir les injections de faute : cela coûte une multiplication modulaire supplémentaire à chaque itération de boucle et une condition dans laquelle on test l'égalité entre deux mpz_t... ce qui peut amener à rajouter ~$k^3$ opérations.
 
 Concrètement ici pour un exposant publique e petit, l'exponentiation coûte $O(k^2)$ (rapide).
-Par contre pour un exposant privé d d'environ k bits, on a un coût de $O(k^3) : ~ 1.5k^3$ pour le square and multiply classique et ~$2k^3$ pour la montgomery ladder.
+Par contre pour un exposant privé d d'environ k bits, on a un coût de $O(k^3)$ : ~ $1.5k^3$ pour le square and multiply classique et ~ $2k^3$ pour la Montgomery ladder.
 
 En principe mpz_powm est optimisée et est plus rapide.
 
