@@ -1,0 +1,16 @@
+Compile tous les .c en .o 
+
+
+gcc -c -O2 -Wall src/gen_primes.c -o build/gen_primes.o
+gcc -c src/modular_exp.c -o build/modular_exp.o
+gcc -c src/blinding.c -o build/blinding.o
+gcc -c src/rsa.c -o build/rsa.o
+
+gcc -c test/tests.c -o test/tests.o
+gcc -c -O2 -march=native src/main.c -o build/main.o
+
+gcc test/tests.o build/modular_exp.o build/gen_primes.o build/blinding.o build/rsa.o -o test/tests -lgmp
+gcc build/main.o build/modular_exp.o build/gen_primes.o build/blinding.o build/rsa.o -o build/main -lgmp
+
+
+-> lie les .o et crée l'exe
